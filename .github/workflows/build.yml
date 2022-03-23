@@ -3,8 +3,6 @@ name: Build
 on:
   pull_request:
   push:
-    branches: 
-      - main
 
 env:
   NAME: 'Test Testov'
