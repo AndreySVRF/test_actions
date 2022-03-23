@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo "Hello ${{ github.event.commit }}"
+        uses: peter-evans/commit-comment@v2
+        run: echo "Hello ${{ steps.get-comment-body.outputs.body }}"
       - name: Invalid title
         if: ${{ !startsWith( github.event.commit_comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
         run: |
