@@ -6,8 +6,18 @@ on:
 
 env:
   NAME: 'Test Testov'
+  INVALID_TITLE_MESSAGE: "Pull request title should be started with 'TEST-XXX'"
   
 jobs:
+  title-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invalid title
+        if: ${{ !startsWith( github.event.commit_comment.comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
+        run: |
+          echo ${{ github.event.commit_comment.comment }}
+          echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+
   build:
     runs-on: ubuntu-latest
     steps:
