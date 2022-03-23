@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo "Hello ${{ github.event.commit_comment.comment }}"
+        run: echo "Hello ${{ github.event.commit_comment }}"
       - name: Invalid title
-        if: ${{ !startsWith( github.event.commit_comment.comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
+        if: ${{ !startsWith( github.event.commit_comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
         run: |
           echo ${{ github.event.commit_comment.comment }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
