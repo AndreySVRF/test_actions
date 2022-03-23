@@ -12,7 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Start Build
-      run: echo "Hello ${{ env.NAME }}"
-    - name: Finish Build
-      run: echo "Hello ${{ env.NAME }}"
+      - name: Start Build
+        run: echo "Hello ${{ env.NAME }}"
+      - name: Invalid title
+        if: ${{ !startsWith( github.event.commit_comment.comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
+        run: |
+          echo ${{ github.event.commit_comment.comment }}
+          echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+      - name: Finish Build
+        run: echo "Hello ${{ env.NAME }}"
