@@ -20,4 +20,4 @@ jobs:
           echo ${{ github.event.commit_comment.comment }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
       - name: Finish Build
-        run: echo "Hello ${{ env.NAME github.event.commit_comment.comment }}"
+        run: echo "Hello ${{ env.NAME }}"
