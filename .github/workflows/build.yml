@@ -12,7 +12,7 @@ env:
 jobs:
   # This workflow contains a single job called "greet"
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Step #1
       run: echo "Hello ${{ env.TITLE_TEST }}"
