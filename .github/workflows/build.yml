@@ -2,12 +2,8 @@ name: Build
 
 on:
   pull_request:
-    tags:
-      - fix/TEST-*
   push:
-    tags:
-      - fix/TEST-*
- 
+  
 env:
   INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX'"
   INVALID_COMMIT_MESSAGE: "Commit message should be started with one of the following options: 'feat/TEST-XXX', 'fix/TEST-XXX', 'test/TEST-XXX'"
@@ -29,7 +25,7 @@ jobs:
         commits: ${{github.event.commits}}
     steps:
       - name: Check commit message ${{matrix.commits.message}}
-        if: ${{ !startsWith( matrix.commits.message, 'refs/tags') && ( matrix.commits.message != null ) }}
+        if: ${{ !startsWith( matrix.commits.message, [fix/TRE-]) && ( matrix.commits.message != null ) }}
         run: |
           echo ${{ matrix.commits.message }}
           echo ${{ env.INVALID_COMMIT_MESSAGE }} && exit 1
