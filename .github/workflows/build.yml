@@ -25,7 +25,7 @@ jobs:
         commits: ${{github.event.commits}}
     steps:
       - name: Check commit message ${{matrix.commits.message}}
-        if: ${{ !startsWith( matrix.commits.message, [fix/TEST-]) && ( matrix.commits.message != null ) }}
+        if: ${{ !startsWith( matrix.commits.message, '[fix/TEST-]') && ( matrix.commits.message != null ) }}
         run: |
           echo ${{ matrix.commits.message }}
           echo ${{ env.INVALID_COMMIT_MESSAGE }} && exit 1
