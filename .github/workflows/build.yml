@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        commits: github.event.commits
+        commits: ${{github.event.commits}}
     steps:
       - name: Invalid commit message ${{matrix.commits.message}}
         if: ${{ !startsWith( matrix.commits.message, 'TEST-' ) && ( matrix.commits.message != null ) }}
