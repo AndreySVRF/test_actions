@@ -3,7 +3,7 @@ name: Build
 on:
   pull_request:
     tags:
-      - '[fix/TEST-|feat/TEST-]+'
+      - fix/TEST-**
   push:
  
 env:
