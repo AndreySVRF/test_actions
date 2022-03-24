@@ -5,19 +5,23 @@ on:
   push:
 
 env:
-  NAME: 'Test Testov'
   INVALID_TITLE_MESSAGE: "Pull request title should be started with 'TEST-XXX'"
   
 jobs:
+ title-validation:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Invalid title
+      if: ${{ !startsWith( github.event.head_commit.message, 'TEST-' ) && ( github.event.head_commit.message != null ) }}
+      run: |
+        echo ${{ github.event.head_commit.message }}
+        echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+
   build:
+    needs: title-validation
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
         run: echo ${{ github.event.head_commit.message }}
-      - name: Invalid title
-        if: ${{ !startsWith( github.event.pull_request.title, 'test-' ) && ( github.event.pull_request.title != null ) }}
-        run: |
-          echo ${{ github.event.pull_request.title }}
-          echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
       - name: Finish Build
         run: echo "Hello ${{ env.NAME }}"
