@@ -3,8 +3,10 @@ name: Build
 on:
   pull_request:
     tags:
-      - fix/TEST-**
+      - fix/TEST-*
   push:
+    tags:
+      - fix/TEST-*
  
 env:
   INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX'"
