@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo ${{ github.commit_comment }}
+        run: echo ${{ github.event.pull_request.title }}
       - name: Invalid title
-        if: ${{ !startsWith( github.event.commit_comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
+        if: ${{ !startsWith( github.event.pull_request.title, 'test-' ) && ( github.event.pull_request.title != null ) }}
         run: |
-          echo ${{ github.event.commit_comment.comment }}
+          echo ${{ github.event.pull_request.title }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
       - name: Finish Build
         run: echo "Hello ${{ env.NAME }}"
