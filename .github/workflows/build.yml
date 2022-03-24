@@ -17,9 +17,9 @@ jobs:
         commits: [github.event.commits]
     steps:
       - name: Invalid commit message ${{matrix.commits.message}}
-        if: ${{ !startsWith( github.event.head_commit.message, 'TEST-' ) && ( github.event.head_commit.message != null ) }}
+        if: ${{ !startsWith( matrix.commits.message, 'TEST-' ) && ( matrix.commits.message != null ) }}
         run: |
-          echo ${{ github.event.head_commit.message }}
+          echo ${{ matrix.commits.message }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
 
   build:
@@ -27,6 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo ${{ github.event.head_commit.message }}
+        run: echo ${{ matrix.commits.message }}
       - name: Finish Build
         run: echo "Hello ${{ env.NAME }}"
