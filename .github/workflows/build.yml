@@ -10,20 +10,29 @@ env:
 
   
 jobs:
+  validation-pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check title pull
+        if: ${{ !startsWith( github.event.pull_request.title, 'TEST-' ) && ( github.event.pull_request.title != null ) }}
+        run: |
+          echo ${{ github.event.pull_request.title }}
+          echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+
   validation-commit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         commits: ${{github.event.commits}}
     steps:
-      - name: Invalid commit message ${{matrix.commits.message}}
+      - name: Check commit message ${{matrix.commits.message}}
         if: ${{ !startsWith( matrix.commits.message, 'TEST-' ) && ( matrix.commits.message != null ) }}
         run: |
           echo ${{ matrix.commits.message }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
 
   build:
-    needs: validation-commit
+    needs: [validation-pull, validation-commit]
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
