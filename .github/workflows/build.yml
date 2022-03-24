@@ -3,6 +3,8 @@ name: Build
 on:
   pull_request:
   push:
+  tags:
+    - '[fix/TEST-|feat/TEST-]+'
 
 env:
   INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX'"
@@ -25,7 +27,7 @@ jobs:
         commits: ${{github.event.commits}}
     steps:
       - name: Check commit message ${{matrix.commits.message}}
-        if: ${{ !startsWith( matrix.commits.message, '/^[fix/TEST-|feat/TEST-]/') && ( matrix.commits.message != null ) }}
+        if: ${{ !startsWith( matrix.commits.message, 'refs/tags') && ( matrix.commits.message != null ) }}
         run: |
           echo ${{ matrix.commits.message }}
           echo ${{ env.INVALID_COMMIT_MESSAGE }} && exit 1
