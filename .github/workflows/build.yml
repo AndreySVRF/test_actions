@@ -2,10 +2,10 @@ name: Build
 
 on:
   pull_request:
+    tags:
+      - '[fix/TEST-|feat/TEST-]+'
   push:
-  tags:
-    - '[fix/TEST-|feat/TEST-]+'
-
+ 
 env:
   INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX'"
   INVALID_COMMIT_MESSAGE: "Commit message should be started with one of the following options: 'feat/TEST-XXX', 'fix/TEST-XXX', 'test/TEST-XXX'"
