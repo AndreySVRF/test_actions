@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo ${{github.event.pull_request.title}}
+        run: echo ${{github.event}}
       - name: Invalid title
         if: ${{ !startsWith( github.event.commit_comment, 'TEST-' ) && ( github.event.commit_comment.comment != null ) }}
         run: |
