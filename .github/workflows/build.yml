@@ -27,10 +27,6 @@ jobs:
           pattern: '^TEST-[0-9]{3,5}[ ](fix|test)\([a-zA-Z]{1,64}\):'
           flags: 'gm'
           error: 'Your first line has to contain a commit type like "TEST-1234 fix(message): test".'
-        # if: ${{ !startsWith( matrix.commits.message, '[fix/TEST-]') && ( matrix.commits.message != null ) }}
-        # run: |
-        #   echo ${{ matrix.commits.message }}
-        #   echo ${{ env.INVALID_COMMIT_MESSAGE }} && exit 1
 
   build:
     needs: [validation-pull, validation-commit]
