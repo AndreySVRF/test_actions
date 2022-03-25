@@ -24,7 +24,7 @@ jobs:
       - name: Check commits message
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^TEST-[0-9]{3,5}[ ](fix|test)\([a-zA-Z]{1,64}\):'
+          pattern: '^TEST-[0-9]{3,5}[ ](fix|test|feat)\([a-zA-Z0-9-_. ]{1,64}\):'
           flags: 'gm'
           error: 'Your first line has to contain a commit type like "TEST-1234 fix(message): test".'
 
