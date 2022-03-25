@@ -19,7 +19,7 @@ jobs:
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
 
   validation-commits:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Get PR Commits
         id: 'get-pr-commits'
