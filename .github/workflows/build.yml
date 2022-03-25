@@ -18,13 +18,10 @@ jobs:
           echo ${{ github.event.pull_request.title }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
 
-  validation-commit:
+  validation-commits:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        commits: ${{github.event.commits}}
     steps:
-      - name: Check commit message ${{matrix.commits.message}}
+      - name: Check commits message
         uses: gsactions/commit-message-checker@v1
         with:
           pattern: '^TEST-[0-9]{3,5}[ ](fix|test)\([a-zA-Z]{1,64}\):'
@@ -40,6 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Build
-        run: echo ${{ matrix.commits.message }}
+        run: echo ${{ env.NAME }}
       - name: Finish Build
         run: echo "Hello ${{ env.NAME }}"
