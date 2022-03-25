@@ -6,7 +6,7 @@ on:
   
 env:
   INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX'"
-  INVALID_COMMIT_MESSAGE: "Commit message should be started with one of the following options: 'feat/TEST-XXX', 'fix/TEST-XXX', 'test/TEST-XXX'"
+  INVALID_COMMIT_MESSAGE: "Commit message should be started with one of the following options: 'TEST-XXXX feat(file-name): Message', 'TEST-XXXX fix(file-name): Message', 'TEST-XXXX test(file-name): Message'"
   
 jobs:
   validation-pull:
@@ -26,7 +26,8 @@ jobs:
         with:
           pattern: '^TEST-[0-9]{3,5}[ ](fix|test|feat)\([a-zA-Z0-9-_. ]{1,64}\):'
           flags: 'gm'
-          error: 'Your first line has to contain a commit type like "TEST-1234 fix(message): test".'
+          checkAllCommitMessages: 'true'
+          error: ${{ env.INVALID_COMMIT_MESSAGE }}
 
   build:
     needs: [validation-pull, validation-commits]
