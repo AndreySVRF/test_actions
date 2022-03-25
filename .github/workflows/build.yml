@@ -17,6 +17,7 @@ jobs:
         run: |
           echo ${{ github.event.pull_request.title }}
           echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+          
 
   validation-commits:
     runs-on: ubuntu-latest
