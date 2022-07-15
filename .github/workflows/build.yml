@@ -3,15 +3,42 @@ name: Build
 on:
   pull_request:
   push:
-    branches: 
-      - main
-
+  
 env:
-  NAME: 'Test Testov'
+  INVALID_TITLE_PULL: "Pull request title should be started with 'TEST-XXXX', example: 'TRE-1234 [Web-Patient] Labels are incorrect'"
+  INVALID_COMMIT_MESSAGE: "Commit message should be started with one of the following options: 'TRE-XXXX feat(file-name):', 'TRE-XXXX fix(file-name):', 'TRE-XXXX test(file-name):'"
   
 jobs:
-  build:
+  validation-pull:
     runs-on: ubuntu-latest
     steps:
-    - name: Step one
-      run: echo "Hello ${{ env.NAME }}"
+      - name: Check title pull
+        if: ${{ !startsWith( github.event.pull_request.title, 'TRE-' ) && ( github.event.pull_request.title != null ) }}
+        run: |
+          echo ${{ github.event.pull_request.title }}
+          echo ${{ env.INVALID_TITLE_MESSAGE }} && exit 1
+          
+
+  validation-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR Commits
+        id: 'get-pr-commits'
+        uses: tim-actions/get-pr-commits@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check commits message
+        uses: tim-actions/commit-message-checker-with-regex@v0.3.1
+        with:
+          commits: ${{ steps.get-pr-commits.outputs.commits }}
+          pattern: '^TRE-[0-9]{3,5}[ ](feat|feature|fix|docs|style|refactor|test|chore)\([a-zA-Z0-9-_. ]{1,64}\):'
+          error: ${{ env.INVALID_COMMITS_MESSAGE }}
+
+  build:
+    needs: [validation-pull, validation-commits]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Build
+        run: echo ${{ env.NAME }}
+      - name: Finish Build
+        run: echo "Hello ${{ env.NAME }}"
